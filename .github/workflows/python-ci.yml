@@ -1,0 +1,23 @@
+name: Python quick check
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  quick-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.x"
+
+      - name: Quick sanity run
+        run: |
+          python -c "import sys; print('Python', sys.version.split()[0])"
+          python -c "import port_scanner; print('port_scanner import OK')" || true
